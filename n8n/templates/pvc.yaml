@@ -18,7 +18,9 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.data.size }}
+  {{- if .Values.persistence.data.storageClass }}
   storageClassName: {{ .Values.persistence.data.storageClass }}
+  {{- end }}
 {{ end }}
 ---
 # Files PVC
@@ -41,6 +43,8 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.files.size }}
+  {{- if .Values.persistence.files.storageClass }}
   storageClassName: {{ .Values.persistence.files.storageClass }}
+  {{- end }}
 {{ end }}
 
