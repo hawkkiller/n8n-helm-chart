@@ -37,20 +37,20 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /healthz*/}}
-{{/*              port: http*/}}
-{{/*          readinessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /healthz*/}}
-{{/*              port: http*/}}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
           volumeMounts:
             - name: localtime
               mountPath: /etc/localtime
               readOnly: true
             - name: "{{ include "n8n.fullname" . }}-data"
-              mountPath: /home/node/.n8n/crash.journal
+              mountPath: /home/node/.n8n
             - name: "{{ include "n8n.fullname" . }}-files"
               mountPath: /files
           resources:
