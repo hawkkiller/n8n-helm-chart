@@ -20,7 +20,7 @@ spec:
       storage: {{ .Values.persistence.data.size }}
   storageClassName: {{ .Values.persistence.data.storageClass }}
 {{ end }}
-
+---
 # Files PVC
 {{- if .Values.persistence.enabled }}
 apiVersion: v1
