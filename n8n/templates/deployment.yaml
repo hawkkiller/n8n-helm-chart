@@ -50,7 +50,7 @@ spec:
               mountPath: /etc/localtime
               readOnly: true
             - name: "{{ include "n8n.fullname" . }}-data"
-              mountPath: /home/node/.n8n
+              mountPath: /root/.n8n
             - name: "{{ include "n8n.fullname" . }}-files"
               mountPath: /files
           resources:
