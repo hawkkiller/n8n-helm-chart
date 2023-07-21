@@ -58,9 +58,9 @@ spec:
           env:
             - name: N8N_PORT
               value: "{{ .Values.service.port }}"
-            {{- range .Values.env }}
-            - name: {{ .name }}
-              value: "{{ .value }}"
+            {{- range $key, $val := .Values.env }}
+            - name: {{ $key }}
+              value: "{{ $val }}"
             {{- end }}
           {{- if .Values.envSecretRef }}
           envFrom:
