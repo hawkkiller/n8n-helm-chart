@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 5678
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -45,13 +45,25 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
+            - name: "{{ include "n8n.fullname" . }}-data"
+              mountPath: /home/node
+            - name: "{{ include "n8n.fullname" . }}-files"
+              mountPath: /files
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: N8N_PORT
+              value: "{{ .Values.service.port }}"
             {{ toYaml .Values.env | nindent 12 }}
+          {{- if .Values.envSecretRef }}
           envFrom:
             - secretRef:
                 name: {{ .Values.envSecretRef }}
+          {{- end }}
       volumes:
         - name: localtime
           hostPath:
