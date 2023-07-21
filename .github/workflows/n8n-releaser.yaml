@@ -1,0 +1,35 @@
+name: n8n releaser
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'n8n/**'
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+    paths:
+      - 'n8n/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write # write releases
+  id-token: write
+  packages: write # write packages
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Release Chart
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
+      - name: Publish Helm chart to GHCR
+        run: |
+          helm package n8n
+          helm push n8n-*.tgz oci://ghcr.io/hawkkiller/charts
+          rm n8n-*.tgz
