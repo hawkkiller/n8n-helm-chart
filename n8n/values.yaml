@@ -107,7 +107,7 @@ persistence:
     annotations: { }
     storageClass: ""
 
-env: {}
+env: []
 # - name: MY_ENV_VAR
 #   value: "myValue"
 

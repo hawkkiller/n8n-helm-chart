@@ -58,7 +58,10 @@ spec:
           env:
             - name: N8N_PORT
               value: "{{ .Values.service.port }}"
-            {{ toYaml .Values.env | nindent 12 }}
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }}
           {{- if .Values.envSecretRef }}
           envFrom:
             - secretRef:
